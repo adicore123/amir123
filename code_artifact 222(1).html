@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>המרכבה - דיווח תקלה</title>
+    
+    <!-- ייבוא פונט Heebo -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- ייבוא Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Heebo', 'sans-serif'],
+                    },
+                    colors: {
+                        merkavaBlue: '#1B1F44',
+                        merkavaOrange: '#F58220',
+                        waGreen: '#25D366',
+                    },
+                    animation: {
+                        'blob': 'blob 7s infinite',
+                    },
+                    keyframes: {
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        }
+                    },
+                    boxShadow: {
+                        'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.07)',
+                        'glow-orange': '0 0 0 4px rgba(245, 130, 32, 0.2)',
+                        'glow-green': '0 8px 25px -8px rgba(37, 211, 102, 0.5)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- ייבוא Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <style>
+        body {
+            background-color: #f0f4f8;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* דיליי לאנימציות של הרקע */
+        .animation-delay-2000 { animation-delay: 2s; }
+        .animation-delay-4000 { animation-delay: 4s; }
+
+        /* אנימציית כניסה */
+        @keyframes slideUpFade {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-enter {
+            animation: slideUpFade 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+
+        /* אנימציית שגיאה */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20% { transform: translateX(-4px); }
+            40% { transform: translateX(4px); }
+            60% { transform: translateX(-4px); }
+            80% { transform: translateX(4px); }
+        }
+        .error-shake {
+            animation: shake 0.4s ease-in-out;
+        }
+        
+        textarea::-webkit-scrollbar {
+            width: 6px;
+        }
+        textarea::-webkit-scrollbar-thumb {
+            background-color: #cbd5e1;
+            border-radius: 10px;
+        }
+
+        /* אפקט זכוכית לתפריטים ושדות */
+        .glass-input {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+        }
+        .glass-input:focus {
+            background: rgba(255, 255, 255, 0.95);
+        }
+    </style>
+</head>
+<body class="relative flex items-center justify-center min-h-screen p-4 sm:p-8 antialiased text-slate-800 overflow-hidden">
+
+    <!-- רקע צבעוני ואנימטיבי (Special Colors) -->
+    <div class="fixed inset-0 w-full h-full pointer-events-none z-0 overflow-hidden">
+        <div class="absolute top-[-10%] left-[-10%] w-72 h-72 md:w-96 md:h-96 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl opacity-60 animate-blob"></div>
+        <div class="absolute top-[10%] right-[-10%] w-72 h-72 md:w-96 md:h-96 bg-orange-300 rounded-full mix-blend-multiply filter blur-3xl opacity-60 animate-blob animation-delay-2000"></div>
+        <div class="absolute bottom-[-10%] left-[20%] w-72 h-72 md:w-96 md:h-96 bg-blue-300 rounded-full mix-blend-multiply filter blur-3xl opacity-60 animate-blob animation-delay-4000"></div>
+    </div>
+
+    <div class="w-full max-w-[480px] relative z-10 animate-enter mx-auto">
+        
+        <!-- סרגל עליון מינימליסטי -->
+        <div class="flex justify-between items-center mb-4 px-2 sm:px-0">
+            <span class="bg-white/60 backdrop-blur-md px-3 py-1.5 rounded-full text-xs font-semibold text-slate-600 shadow-sm border border-white flex items-center gap-1.5">
+                <i class="ph-fill ph-shield-check text-green-500 text-sm"></i>
+                טופס מאובטח
+            </span>
+            <span class="text-xs font-medium text-slate-500 bg-white/50 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/50">בס"ד</span>
+        </div>
+
+        <!-- כרטיסייה מרכזית זכוכית (Glassmorphism) -->
+        <div class="bg-white/70 backdrop-blur-xl rounded-3xl shadow-glass overflow-hidden border border-white/80">
+            
+            <!-- אזור כותרת -->
+            <div class="pt-6 sm:pt-8 pb-4 sm:pb-6 px-6 sm:px-8 text-center relative">
+                <div class="w-12 h-12 sm:w-14 sm:h-14 bg-white/80 rounded-2xl flex items-center justify-center mx-auto mb-3 sm:mb-4 shadow-sm border border-white relative transform transition-transform hover:rotate-3 hover:scale-105 duration-300">
+                    <i class="ph ph-wrench text-xl sm:text-2xl text-merkavaBlue"></i>
+                    <div class="absolute top-0 right-0 w-2.5 h-2.5 sm:w-3 sm:h-3 bg-gradient-to-tr from-merkavaOrange to-yellow-400 rounded-full border-2 border-white"></div>
+                </div>
+                
+                <h1 class="text-xl sm:text-2xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-merkavaBlue to-indigo-700 tracking-tight mb-1">המרכבה</h1>
+                <p class="text-slate-600 text-[13px] sm:text-sm font-medium">נשמח לדעת מה הבעיה, ונטפל בה בהקדם.</p>
+            </div>
+
+            <div class="h-px w-full bg-gradient-to-r from-transparent via-slate-200/80 to-transparent"></div>
+
+            <!-- טופס -->
+            <form id="repairForm" class="p-5 sm:p-8 pt-5 sm:pt-6 space-y-5 sm:space-y-6" onsubmit="sendToWhatsApp(event)">
+                
+                <!-- שם מלא -->
+                <div class="space-y-1.5">
+                    <label for="fullName" class="block text-[13px] sm:text-sm font-semibold text-slate-700">איך קוראים לך?</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none">
+                            <i class="ph ph-user text-slate-500 text-lg"></i>
+                        </div>
+                        <input type="text" id="fullName" required placeholder="שם מלא" 
+                            class="glass-input w-full text-slate-800 text-base sm:text-sm rounded-xl px-4 py-3 sm:py-3.5 pr-11 focus:outline-none focus:border-merkavaOrange focus:ring-4 focus:ring-merkavaOrange/20 transition-all font-medium placeholder:text-slate-400 placeholder:font-normal">
+                    </div>
+                </div>
+
+                <!-- סוג הכלי - גריד חכם -->
+                <div id="toolGridContainer" class="space-y-2 relative transition-all rounded-2xl">
+                    <label class="block text-[13px] sm:text-sm font-semibold text-slate-700 mb-1">איזה כלי צריך תיקון?</label>
+                    <div class="grid grid-cols-2 gap-2 sm:gap-3">
+                        
+                        <!-- קורקינט חשמלי -->
+                        <label class="cursor-pointer relative">
+                            <input type="radio" name="toolType" value="קורקינט חשמלי" class="peer sr-only">
+                            <div class="glass-input h-full p-3 sm:p-4 rounded-xl hover:bg-white/80 transition-all flex flex-col items-center justify-center gap-1.5 sm:gap-2 peer-checked:border-merkavaOrange peer-checked:bg-gradient-to-br peer-checked:from-orange-50 peer-checked:to-white peer-checked:shadow-soft group text-center">
+                                <i class="ph ph-scooter text-2xl sm:text-3xl text-slate-400 peer-checked:text-merkavaOrange group-hover:text-slate-600 transition-colors duration-300 group-hover:scale-110"></i>
+                                <span class="font-bold text-[13px] sm:text-sm text-slate-600 peer-checked:text-merkavaBlue leading-tight">קורקינט חשמלי</span>
+                            </div>
+                            <div class="absolute top-1.5 right-1.5 sm:top-2 sm:right-2 opacity-0 peer-checked:opacity-100 transition-opacity duration-300 transform peer-checked:scale-100 scale-50">
+                                <i class="ph-fill ph-check-circle text-merkavaOrange text-lg sm:text-xl bg-white rounded-full"></i>
+                            </div>
+                        </label>
+
+                        <!-- אופניים חשמליים -->
+                        <label class="cursor-pointer relative">
+                            <input type="radio" name="toolType" value="אופניים חשמליים" class="peer sr-only">
+                            <div class="glass-input h-full p-3 sm:p-4 rounded-xl hover:bg-white/80 transition-all flex flex-col items-center justify-center gap-1.5 sm:gap-2 peer-checked:border-merkavaOrange peer-checked:bg-gradient-to-br peer-checked:from-orange-50 peer-checked:to-white peer-checked:shadow-soft group text-center">
+                                <i class="ph ph-lightning text-2xl sm:text-3xl text-slate-400 peer-checked:text-merkavaOrange group-hover:text-slate-600 transition-colors duration-300 group-hover:scale-110"></i>
+                                <span class="font-bold text-[13px] sm:text-sm text-slate-600 peer-checked:text-merkavaBlue leading-tight">אופניים חשמליים</span>
+                            </div>
+                            <div class="absolute top-1.5 right-1.5 sm:top-2 sm:right-2 opacity-0 peer-checked:opacity-100 transition-opacity duration-300 transform peer-checked:scale-100 scale-50">
+                                <i class="ph-fill ph-check-circle text-merkavaOrange text-lg sm:text-xl bg-white rounded-full"></i>
+                            </div>
+                        </label>
+
+                        <!-- אופניים מכניים -->
+                        <label class="cursor-pointer relative">
+                            <input type="radio" name="toolType" value="אופניים מכניים" class="peer sr-only">
+                            <div class="glass-input h-full p-3 sm:p-4 rounded-xl hover:bg-white/80 transition-all flex flex-col items-center justify-center gap-1.5 sm:gap-2 peer-checked:border-merkavaOrange peer-checked:bg-gradient-to-br peer-checked:from-orange-50 peer-checked:to-white peer-checked:shadow-soft group text-center">
+                                <i class="ph ph-bicycle text-2xl sm:text-3xl text-slate-400 peer-checked:text-merkavaOrange group-hover:text-slate-600 transition-colors duration-300 group-hover:scale-110"></i>
+                                <span class="font-bold text-[13px] sm:text-sm text-slate-600 peer-checked:text-merkavaBlue leading-tight">אופניים מכניים</span>
+                            </div>
+                            <div class="absolute top-1.5 right-1.5 sm:top-2 sm:right-2 opacity-0 peer-checked:opacity-100 transition-opacity duration-300 transform peer-checked:scale-100 scale-50">
+                                <i class="ph-fill ph-check-circle text-merkavaOrange text-lg sm:text-xl bg-white rounded-full"></i>
+                            </div>
+                        </label>
+
+                        <!-- אחר -->
+                        <label class="cursor-pointer relative">
+                            <input type="radio" name="toolType" value="אחר" class="peer sr-only">
+                            <div class="glass-input h-full p-3 sm:p-4 rounded-xl hover:bg-white/80 transition-all flex flex-col items-center justify-center gap-1.5 sm:gap-2 peer-checked:border-merkavaOrange peer-checked:bg-gradient-to-br peer-checked:from-orange-50 peer-checked:to-white peer-checked:shadow-soft group text-center">
+                                <i class="ph ph-dots-three-circle text-2xl sm:text-3xl text-slate-400 peer-checked:text-merkavaOrange group-hover:text-slate-600 transition-colors duration-300 group-hover:scale-110"></i>
+                                <span class="font-bold text-[13px] sm:text-sm text-slate-600 peer-checked:text-merkavaBlue leading-tight">אחר</span>
+                            </div>
+                            <div class="absolute top-1.5 right-1.5 sm:top-2 sm:right-2 opacity-0 peer-checked:opacity-100 transition-opacity duration-300 transform peer-checked:scale-100 scale-50">
+                                <i class="ph-fill ph-check-circle text-merkavaOrange text-lg sm:text-xl bg-white rounded-full"></i>
+                            </div>
+                        </label>
+                        
+                    </div>
+                    <!-- הודעת שגיאה מעוצבת -->
+                    <div id="toolErrorMsg" class="hidden absolute -bottom-6 right-0 flex items-center gap-1 text-red-500 text-[11px] sm:text-xs font-bold drop-shadow-sm">
+                        <i class="ph-fill ph-warning-circle text-sm"></i>
+                        <span>חובה לבחור סוג כלי</span>
+                    </div>
+                </div>
+
+                <!-- מה הבעיה -->
+                <div class="space-y-1.5 pt-1 sm:pt-3">
+                    <label for="problemDesc" class="block text-[13px] sm:text-sm font-semibold text-slate-700">תיאור התקלה</label>
+                    <textarea id="problemDesc" required rows="3" placeholder="מה בדיוק קרה? קולות מוזרים? פנצ'ר?" 
+                        class="glass-input w-full text-slate-800 text-base sm:text-sm rounded-xl px-4 py-3 focus:outline-none focus:border-merkavaOrange focus:ring-4 focus:ring-merkavaOrange/20 transition-all font-medium placeholder:text-slate-400 placeholder:font-normal resize-none"></textarea>
+                </div>
+
+                <!-- הערות נוספות -->
+                <div class="space-y-1.5">
+                    <label for="extraNotes" class="block text-[13px] sm:text-sm font-semibold text-slate-700">הערות <span class="text-slate-400 font-normal">(אופציונלי)</span></label>
+                    <textarea id="extraNotes" rows="2" placeholder="בקשות מיוחדות, זמן הגעה משוער וכו'" 
+                        class="glass-input w-full text-slate-800 text-base sm:text-sm rounded-xl px-4 py-3 focus:outline-none focus:border-merkavaOrange focus:ring-4 focus:ring-merkavaOrange/20 transition-all font-medium placeholder:text-slate-400 placeholder:font-normal resize-none"></textarea>
+                </div>
+
+                <!-- כפתור שליחה -->
+                <div class="pt-2 sm:pt-4">
+                    <button type="submit" 
+                        class="w-full bg-gradient-to-r from-[#25D366] to-[#128C7E] text-white font-bold text-base sm:text-lg py-3.5 sm:py-4 px-6 rounded-xl shadow-glow-green hover:shadow-[0_10px_30px_-10px_rgba(37,211,102,0.7)] transform hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-2 group relative overflow-hidden">
+                        
+                        <!-- אפקט ברק עדין על הכפתור -->
+                        <div class="absolute top-0 -inset-full h-full w-1/2 z-5 block transform -skew-x-12 bg-gradient-to-r from-transparent to-white opacity-20 group-hover:animate-[shine_1s]"></div>
+                        
+                        <i class="ph-fill ph-whatsapp-logo text-xl sm:text-2xl group-hover:scale-110 transition-transform duration-300 relative z-10"></i>
+                        <span class="relative z-10">שליחה בוואטסאפ למוסך</span>
+                    </button>
+                    <p class="text-center text-[11px] sm:text-xs text-slate-500 mt-2.5 sm:mt-3 font-medium">הלחיצה תפתח שיחה חדשה בוואטסאפ</p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <style>
+        @keyframes shine {
+            100% { left: 125%; }
+        }
+    </style>
+</head>
+<body class="relative flex items-center justify-center min-h-screen p-4 pb-32 sm:p-8 sm:pb-12 antialiased text-slate-800 overflow-x-hidden">
+
+    <!-- רקע צבעוני ואנימטיבי (Special Colors) -->
+
+    <script>
+        function sendToWhatsApp(event) {
+            event.preventDefault();
+
+            const name = document.getElementById('fullName').value.trim();
+            const problemDesc = document.getElementById('problemDesc').value.trim();
+            const extraNotes = document.getElementById('extraNotes').value.trim();
+            
+            const selectedToolElement = document.querySelector('input[name="toolType"]:checked');
+            
+            const gridContainer = document.getElementById('toolGridContainer');
+            const errorMsg = document.getElementById('toolErrorMsg');
+            
+            // ולידציה של בחירת כלי
+            if (!selectedToolElement) {
+                gridContainer.classList.add('error-shake');
+                
+                // מדגיש את המסגרת באדום
+                const labels = gridContainer.querySelectorAll('label > div:first-of-type');
+                labels.forEach(l => {
+                    l.classList.add('border-red-400', 'bg-red-50/70');
+                    l.classList.remove('border-white/80');
+                });
+                errorMsg.classList.remove('hidden');
+                
+                setTimeout(() => {
+                    gridContainer.classList.remove('error-shake');
+                }, 400);
+                return;
+            }
+            
+            const toolType = selectedToolElement.value;
+
+            // מספר הטלפון
+            const phoneNumber = "972549387731";
+
+            // יצירת הודעה מעוצבת לוואטסאפ
+            let whatsappMessage = `*פנייה חדשה - המרכבה 🛠️*\n`;
+            whatsappMessage += `━━━━━━━━━━━━━━━━━━\n\n`;
+            whatsappMessage += `*👤 לקוח:* ${name}\n`;
+            whatsappMessage += `*🛴 כלי:* ${toolType}\n\n`;
+            whatsappMessage += `*⚠️ תיאור התקלה:*\n${problemDesc}\n`;
+            
+            if (extraNotes !== "") {
+                whatsappMessage += `\n*📝 הערות:*\n${extraNotes}\n`;
+            }
+
+            whatsappMessage += `\n━━━━━━━━━━━━━━━━━━\n_נשלח באמצעות מערכת פניות חכמה_`;
+
+            const encodedMessage = encodeURIComponent(whatsappMessage);
+            const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+
+            // תיקון למובייל: שימוש בניתוב ישיר במקום פתיחת חלון חדש כדי למנוע חסימת פופ-אפים
+            window.location.href = whatsappLink;
+        }
+
+        // הסרת שגיאות בעת בחירת כלי
+        const radioInputs = document.querySelectorAll('input[name="toolType"]');
+        radioInputs.forEach(input => {
+            input.addEventListener('change', () => {
+                document.getElementById('toolErrorMsg').classList.add('hidden');
+                const gridContainer = document.getElementById('toolGridContainer');
+                const labels = gridContainer.querySelectorAll('label > div:first-of-type');
+                labels.forEach(l => {
+                    l.classList.remove('border-red-400', 'bg-red-50/70');
+                    l.classList.add('border-white/80');
+                });
+            });
+        });
+    </script>
+
+    <!-- כפתור ניווט צף לגוגל מפות - מותאם למובייל עם סמל גוגל -->
+    <div class="fixed bottom-4 left-4 sm:bottom-8 sm:left-8 z-50 flex flex-col items-start gap-2.5 pointer-events-none animate-enter" style="animation-delay: 0.3s; animation-fill-mode: both;">
+        
+        <!-- בועת הסבר קומפקטית למובייל -->
+        <div class="relative bg-white/95 backdrop-blur-xl border border-slate-200/60 shadow-[0_8px_20px_rgba(0,0,0,0.1)] rounded-2xl p-2.5 sm:p-3 max-w-[145px] sm:max-w-[170px] pointer-events-auto transform transition-all duration-300 hover:scale-105 origin-bottom-left">
+            <div class="flex items-start gap-1.5 sm:gap-2">
+                <i class="ph-fill ph-info text-blue-500 text-base sm:text-lg mt-0.5"></i>
+                <p class="text-[10px] sm:text-xs font-semibold text-slate-600 leading-tight">
+                    <span class="text-slate-800 font-extrabold block mb-0.5">יהודה הנשיא 94, אלעד</span>
+                    החנות בשורת החנויות, יש שלט ליד.
+                </p>
+            </div>
+            <!-- משולש הבועה -->
+            <div class="absolute -bottom-1.5 left-5 w-3.5 h-3.5 bg-white/95 border-b border-r border-slate-200/60 transform rotate-45"></div>
+        </div>
+
+        <!-- כפתור מפות יוקרתי (Pill) עם סמל גוגל מקורי -->
+        <a href="https://www.google.com/maps/search/?api=1&query=המרכבה+עולים+על+הגלגל+יהודה+הנשיא+94+אלעד" target="_blank" rel="noopener noreferrer" 
+           class="pointer-events-auto flex items-center gap-2 sm:gap-3 bg-white p-1.5 pr-4 sm:p-2 sm:pr-5 rounded-full shadow-[0_8px_25px_-5px_rgba(0,0,0,0.15)] hover:shadow-[0_10px_30px_-5px_rgba(0,0,0,0.25)] transform hover:-translate-y-1 transition-all duration-300 group border border-slate-100">
+            <div class="bg-slate-50 p-1.5 sm:p-2 rounded-full group-hover:bg-blue-50 transition-colors">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/a/aa/Google_Maps_icon_%282020%29.svg" alt="Google Maps" class="w-5 h-5 sm:w-6 sm:h-6 group-hover:scale-110 transition-transform duration-300" />
+            </div>
+            <span class="font-bold text-slate-700 text-[12px] sm:text-sm tracking-wide">ניווט לחנות</span>
+        </a>
+    </div>
+</body>
+</html>

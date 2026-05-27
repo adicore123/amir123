@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="לוח בקרה — ניהול בקשות שירות | המרכבה" />
+  <title>המרכבה — לוח בקרה</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;800&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <div class="dashboard-container">
+    <!-- Header -->
+    <div class="dashboard-header animate-fade-in">
+      <div class="dashboard-brand">
+        <img class="dashboard-brand-logo" src="/logo.jpg" alt="לוגו המרכבה" />
+        <div class="dashboard-brand-text">
+          <h1>לוח בקרה — המרכבה</h1>
+          <p>ניהול בקשות שירות ותיקונים</p>
+        </div>
+      </div>
+      <div class="dashboard-header-actions">
+        <button class="btn-refresh" id="btnRefresh" type="button">
+          <ion-icon name="refresh"></ion-icon>
+          רענון
+        </button>
+      </div>
+    </div>
+
+    <!-- Stats Row -->
+    <div class="stats-row animate-fade-in-delay-1">
+      <div class="stat-card">
+        <div class="stat-icon gray">
+          <ion-icon name="layers"></ion-icon>
+        </div>
+        <div class="stat-info">
+          <span class="stat-value" id="statTotal">0</span>
+          <span class="stat-label">סה"כ בקשות</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon amber">
+          <ion-icon name="alert-circle"></ion-icon>
+        </div>
+        <div class="stat-info">
+          <span class="stat-value" id="statNew">0</span>
+          <span class="stat-label">חדשות</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon blue">
+          <ion-icon name="construct"></ion-icon>
+        </div>
+        <div class="stat-info">
+          <span class="stat-value" id="statProgress">0</span>
+          <span class="stat-label">בטיפול</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon green">
+          <ion-icon name="checkmark-circle"></ion-icon>
+        </div>
+        <div class="stat-info">
+          <span class="stat-value" id="statCompleted">0</span>
+          <span class="stat-label">הושלמו</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filters Row -->
+    <div class="filters-row animate-fade-in-delay-2">
+      <div class="filter-search">
+        <input type="text" id="searchInput" placeholder="חיפוש לפי שם או טלפון..." autocomplete="off" />
+        <ion-icon name="search"></ion-icon>
+      </div>
+      <div class="filter-select">
+        <select id="filterTool">
+          <option value="">כל סוגי הכלים</option>
+          <option value="אופניים חשמליים">אופניים חשמליים</option>
+          <option value="קורקינט חשמלי">קורקינט חשמלי</option>
+          <option value="אופניים מכניות">אופניים מכניות</option>
+          <option value="אחר">אחר</option>
+        </select>
+      </div>
+      <div class="filter-select">
+        <select id="filterStatus">
+          <option value="">כל הסטטוסים</option>
+          <option value="חדש">חדש</option>
+          <option value="בטיפול">בטיפול</option>
+          <option value="תוקן">תוקן</option>
+          <option value="נסגר">נסגר</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div class="table-container animate-fade-in-delay-3">
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>תאריך</th>
+              <th>שם הלקוח</th>
+              <th>סוג כלי</th>
+              <th>טלפון</th>
+              <th>תקלה</th>
+              <th>הערות</th>
+              <th>סטטוס</th>
+              <th>פעולות</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody">
+            <tr>
+              <td colspan="8">
+                <div class="table-loading">
+                  <div class="loading-spinner"></div>
+                  <p>טוען נתונים...</p>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="/src/service.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
+</html>

@@ -1,0 +1,589 @@
+/* ========================================
+   המרכבה — Design System & Global Styles
+   ======================================== */
+
+/* --- Google Font Import --- */
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&display=swap');
+
+/* --- CSS Custom Properties (Design Tokens) --- */
+:root {
+  /* Brand Colors */
+  --merkava-deep-blue: #1B1F44;
+  --merkava-bright-orange: #F58220;
+  --whatsapp-green: #25D366;
+  --whatsapp-green-hover: #128C7E;
+  --bg-light: #f0f4f8;
+
+  /* Transitions */
+  --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-spring: 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* --- Resets & Tap highlight --- */
+body {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* --- Scrollbar --- */
+textarea::-webkit-scrollbar {
+  width: 6px;
+}
+textarea::-webkit-scrollbar-thumb {
+  background-color: #cbd5e1;
+  border-radius: 10px;
+}
+
+/* --- Glassmorphic Input Styles --- */
+.glass-input {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  transition: all 0.3s ease;
+}
+
+.glass-input:focus {
+  background: rgba(255, 255, 255, 0.95);
+  border-color: var(--merkava-bright-orange);
+  box-shadow: 0 0 0 4px rgba(245, 130, 32, 0.15);
+}
+
+/* --- Animations & Delays --- */
+.animation-delay-2000 { animation-delay: 2s; }
+.animation-delay-4000 { animation-delay: 4s; }
+
+@keyframes slideUpFade {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-enter {
+  animation: slideUpFade 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-4px); }
+  40% { transform: translateX(4px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(4px); }
+}
+
+.error-shake {
+  animation: shake 0.4s ease-in-out;
+}
+
+@keyframes shine {
+  100% { left: 125%; }
+}
+
+/* --- Loading Spinner and Overlay --- */
+.loading-overlay.active {
+  display: flex !important;
+}
+
+/* --- Success/Error Toast --- */
+.toast {
+  transition: all var(--transition-spring);
+  transform: translate(-50%, -100px);
+}
+
+.toast.show {
+  transform: translate(-50%, 0) !important;
+  opacity: 1 !important;
+}
+
+.toast.success ion-icon {
+  color: var(--whatsapp-green);
+}
+
+.toast.error ion-icon {
+  color: #ef4444;
+}
+
+/* ============================================
+   ADMIN DASHBOARD (service.html)
+   ============================================ */
+
+/* --- Dashboard Layout --- */
+.dashboard-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px 24px 60px;
+}
+
+/* --- Dashboard Header --- */
+.dashboard-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.dashboard-brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.dashboard-brand-logo {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--border-radius-md);
+  object-fit: cover;
+  box-shadow: 0 2px 8px rgba(27, 31, 68, 0.1);
+}
+
+.dashboard-brand-text h1 {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--merkava-deep-blue);
+  line-height: 1.2;
+}
+
+.dashboard-brand-text p {
+  font-size: 13px;
+  color: #6b7280;
+  font-weight: 400;
+}
+
+.dashboard-header-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-refresh {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 18px;
+  background: white;
+  border: 2px solid #e5e7eb;
+  border-radius: var(--border-radius-md);
+  cursor: pointer;
+  font-family: 'Heebo', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  transition: all var(--transition-fast);
+}
+
+.btn-refresh:hover {
+  border-color: var(--merkava-bright-orange);
+  color: var(--merkava-bright-orange);
+  background: #fff8f0;
+}
+
+.btn-refresh ion-icon {
+  font-size: 18px;
+}
+
+.btn-refresh.spinning ion-icon {
+  animation: spin 0.8s linear;
+}
+
+/* --- Stats Cards Row --- */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.stat-card {
+  background: white;
+  border-radius: var(--border-radius-lg);
+  padding: 20px;
+  box-shadow: var(--shadow-card);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  transition: all var(--transition-smooth);
+}
+
+.stat-card:hover {
+  box-shadow: var(--shadow-card-hover);
+  transform: translateY(-3px);
+}
+
+.stat-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--border-radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.stat-icon ion-icon {
+  font-size: 24px;
+}
+
+.stat-icon.gray { background: #f3f4f6; }
+.stat-icon.gray ion-icon { color: #6b7280; }
+.stat-icon.amber { background: var(--status-new-bg); }
+.stat-icon.amber ion-icon { color: var(--status-new-text); }
+.stat-icon.blue { background: var(--status-progress-bg); }
+.stat-icon.blue ion-icon { color: var(--status-progress-text); }
+.stat-icon.green { background: var(--status-repaired-bg); }
+.stat-icon.green ion-icon { color: var(--status-repaired-text); }
+
+.stat-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-value {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--merkava-deep-blue);
+  line-height: 1.1;
+}
+
+.stat-label {
+  font-size: 13px;
+  color: #6b7280;
+  font-weight: 400;
+}
+
+/* --- Filters Row --- */
+.filters-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.filter-search {
+  flex: 1;
+  min-width: 200px;
+  position: relative;
+}
+
+.filter-search input {
+  width: 100%;
+  padding: 12px 16px 12px 42px;
+  border: 2px solid #e5e7eb;
+  border-radius: var(--border-radius-md);
+  font-family: 'Heebo', sans-serif;
+  font-size: 14px;
+  background: white;
+  color: var(--merkava-deep-blue);
+  outline: none;
+  transition: all var(--transition-fast);
+  direction: rtl;
+}
+
+.filter-search input::placeholder {
+  color: #9ca3af;
+}
+
+.filter-search input:focus {
+  border-color: var(--merkava-bright-orange);
+  box-shadow: var(--shadow-input-focus);
+}
+
+.filter-search ion-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 18px;
+  color: #9ca3af;
+  pointer-events: none;
+}
+
+.filter-select {
+  position: relative;
+}
+
+.filter-select select {
+  appearance: none;
+  padding: 12px 36px 12px 16px;
+  border: 2px solid #e5e7eb;
+  border-radius: var(--border-radius-md);
+  font-family: 'Heebo', sans-serif;
+  font-size: 14px;
+  background: white;
+  color: var(--merkava-deep-blue);
+  outline: none;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  min-width: 160px;
+  direction: rtl;
+}
+
+.filter-select select:focus {
+  border-color: var(--merkava-bright-orange);
+  box-shadow: var(--shadow-input-focus);
+}
+
+.filter-select::after {
+  content: '';
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 5px 5px 0 5px;
+  border-color: #6b7280 transparent transparent transparent;
+  pointer-events: none;
+}
+
+/* --- Table --- */
+.table-container {
+  background: white;
+  border-radius: var(--border-radius-xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-premium);
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.data-table thead {
+  background: linear-gradient(135deg, var(--merkava-deep-blue) 0%, #2a3068 100%);
+}
+
+.data-table th {
+  padding: 16px 16px;
+  text-align: right;
+  color: white;
+  font-weight: 600;
+  font-size: 13px;
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+}
+
+.data-table tbody tr {
+  border-bottom: 1px solid #f0f2f5;
+  transition: background var(--transition-fast);
+}
+
+.data-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.data-table tbody tr:hover {
+  background: #f8fafc;
+}
+
+.data-table td {
+  padding: 14px 16px;
+  color: #374151;
+  vertical-align: middle;
+}
+
+.data-table td.date-cell {
+  font-size: 13px;
+  color: #6b7280;
+  white-space: nowrap;
+}
+
+.data-table td.name-cell {
+  font-weight: 600;
+  color: var(--merkava-deep-blue);
+}
+
+.tool-type-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: var(--border-radius-pill);
+  background: #f0f2f5;
+  font-size: 13px;
+  font-weight: 500;
+  color: #374151;
+}
+
+.tool-type-badge ion-icon {
+  font-size: 16px;
+  color: var(--merkava-bright-orange);
+}
+
+/* --- Status Select in Table --- */
+.status-select-wrapper {
+  position: relative;
+}
+
+.status-select {
+  appearance: none;
+  border: none;
+  border-radius: var(--border-radius-pill);
+  padding: 6px 28px 6px 14px;
+  font-family: 'Heebo', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  outline: none;
+  transition: all var(--transition-fast);
+  direction: rtl;
+}
+
+.status-select:hover {
+  filter: brightness(0.95);
+}
+
+.status-select.status-new {
+  background: var(--status-new-bg);
+  color: var(--status-new-text);
+}
+
+.status-select.status-progress {
+  background: var(--status-progress-bg);
+  color: var(--status-progress-text);
+}
+
+.status-select.status-repaired {
+  background: var(--status-repaired-bg);
+  color: var(--status-repaired-text);
+}
+
+.status-select.status-closed {
+  background: var(--status-closed-bg);
+  color: var(--status-closed-text);
+}
+
+/* --- Quick Actions --- */
+.quick-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.action-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-smooth);
+}
+
+.action-btn.call {
+  background: #eef2ff;
+  color: #4f46e5;
+}
+
+.action-btn.call:hover {
+  background: #4f46e5;
+  color: white;
+  transform: scale(1.1);
+}
+
+.action-btn.whatsapp {
+  background: #e8faf0;
+  color: var(--whatsapp-green);
+}
+
+.action-btn.whatsapp:hover {
+  background: var(--whatsapp-green);
+  color: white;
+  transform: scale(1.1);
+}
+
+.action-btn ion-icon {
+  font-size: 18px;
+}
+
+/* --- Empty State --- */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: #9ca3af;
+}
+
+.empty-state ion-icon {
+  font-size: 48px;
+  margin-bottom: 12px;
+  opacity: 0.5;
+}
+
+.empty-state p {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+/* --- Table Loading State --- */
+.table-loading {
+  text-align: center;
+  padding: 40px;
+}
+
+.table-loading .loading-spinner {
+  margin: 0 auto 16px;
+}
+
+.table-loading p {
+  font-size: 14px;
+  color: #9ca3af;
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+  .stats-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .filters-row {
+    flex-direction: column;
+  }
+
+  .dashboard-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .data-table {
+    font-size: 13px;
+  }
+
+  .data-table th,
+  .data-table td {
+    padding: 10px 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .form-card {
+    padding: 24px 16px;
+  }
+
+  .tool-grid {
+    gap: 8px;
+  }
+
+  .tool-card {
+    padding: 14px 8px;
+  }
+
+  .stats-row {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .stat-card {
+    padding: 14px;
+    gap: 10px;
+  }
+
+  .stat-value {
+    font-size: 22px;
+  }
+}
