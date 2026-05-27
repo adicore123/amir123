@@ -183,16 +183,11 @@ form.addEventListener('submit', async (e) => {
   setLoading(true);
 
   try {
-    // POST to API
-    const response = await fetch('/api/requests', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-    });
-
-    if (!response.ok) {
-      throw new Error(`Server responded with ${response.status}`);
-    }
+    // Save to Local Storage
+    const savedRequests = JSON.parse(localStorage.getItem('requests') || '[]');
+    payload.id = Date.now().toString();
+    savedRequests.push(payload);
+    localStorage.setItem('requests', JSON.stringify(savedRequests));
 
     showToast('הבקשה נשלחה בהצלחה! 🎉');
 

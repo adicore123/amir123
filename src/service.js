@@ -156,9 +156,7 @@ function escapeHTML(str) {
 // --- Fetch Data ---
 async function fetchRequests() {
   try {
-    const res = await fetch('/api/requests');
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const data = await res.json();
+    const data = JSON.parse(localStorage.getItem('requests') || '[]');
     // Handle both array responses and {data: []} wrappers
     allRequests = Array.isArray(data) ? data : data.data || data.requests || [];
     // Sort by date descending
@@ -216,13 +214,13 @@ window.__updateStatus = async function (selectEl) {
   selectEl.className = `status-select ${newClass}`;
 
   try {
-    const res = await fetch(`/api/requests/${requestId}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ status: newStatus }),
-    });
-
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    // Update Local Storage
+    const savedRequests = JSON.parse(localStorage.getItem('requests') || '[]');
+    const itemIndex = savedRequests.findIndex((r) => (r.id || r._id) === requestId);
+    if (itemIndex > -1) {
+      savedRequests[itemIndex].status = newStatus;
+      localStorage.setItem('requests', JSON.stringify(savedRequests));
+    }
 
     // Update local state
     const item = allRequests.find((r) => (r.id || r._id) === requestId);
